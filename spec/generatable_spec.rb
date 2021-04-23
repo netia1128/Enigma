@@ -24,4 +24,26 @@ RSpec.describe Generatable do
       expect(enigma.generate_key_hash.values.sum).to be < (396)
     end
   end
+
+  describe '#generate_key_hash' do
+    it 'generates a key hash' do
+      enigma = Enigma.new
+
+      expect(enigma.generate_key_hash).to be_a(Hash)
+      expect(enigma.generate_key_hash.keys).to eq([:A, :B, :C, :D])
+      expect(enigma.generate_key_hash.values[0]).to be_between(0, 99)
+      expect(enigma.generate_key_hash.values.sum).to be < (396)
+    end
+  end
+
+  describe '#generate_offset_hash' do
+    it 'can generate offsets' do
+      enigma = Enigma.new
+
+      expect(enigma.generate_offset_hash).to be_a(Hash)
+      expect(enigma.generate_offset_hash.keys).to eq([:A, :B, :C, :D])
+      expect(enigma.generate_offset_hash.values[0]).to be_between(0, 9)
+      expect(enigma.generate_offset_hash.values.sum).to be < (36)
+    end
+  end
 end

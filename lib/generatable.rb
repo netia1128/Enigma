@@ -12,4 +12,14 @@ module Generatable
       D: key.slice(3..4).to_i
     }
   end
+
+  def generate_offset_hash(date = Date.today.strftime('%d%m%y').to_i)
+    offset_base = (date ** 2).to_s.slice(2..5)
+    hash = {
+      A: offset_base.slice(3).to_i,
+      B: offset_base.slice(2).to_i,
+      C: offset_base.slice(1).to_i,
+      D: offset_base.slice(0).to_i
+    }
+  end
 end
