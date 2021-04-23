@@ -11,6 +11,14 @@ RSpec.describe Enigma do
     end
   end
 
+  describe '#encrypt' do
+    it 'returns a hash including the encrypted message, key, and date' do
+      enigma = Enigma.new
+      
+      expect(enigma.encrypt('hello world')).to be_a(Hash)
+    end
+  end
+
   #move this to a module
   describe '#generate_random_key' do
     it 'can generate a random 5 digit number' do
