@@ -46,4 +46,15 @@ RSpec.describe Generatable do
       expect(enigma.generate_offset_hash.values.sum).to be < (36)
     end
   end
+
+  describe '#generate_shift_hash' do
+    it 'can generate shifts' do
+      enigma = Enigma.new
+
+      expect(enigma.generate_shift_hash).to be_a(Hash)
+      expect(enigma.generate_shift_hash.keys).to eq([:A, :B, :C, :D])
+      expect(enigma.generate_shift_hash.values[0]).to be_between(0, 108)
+      expect(enigma.generate_shift_hash.values.sum).to be < (432)
+    end
+  end
 end

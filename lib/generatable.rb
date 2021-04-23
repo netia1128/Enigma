@@ -22,4 +22,15 @@ module Generatable
       D: offset_base.slice(0).to_i
     }
   end
+
+  def generate_shift_hash
+    key_hash = generate_key_hash
+    offset_hash = generate_offset_hash
+    hash = {
+      A: key_hash[:A] + offset_hash[:A],
+      B: key_hash[:B] + offset_hash[:B],
+      C: key_hash[:C] + offset_hash[:C],
+      D: key_hash[:D] + offset_hash[:D]
+    }
+  end
 end
