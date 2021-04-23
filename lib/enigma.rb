@@ -1,19 +1,21 @@
+require_relative 'generatable'
 require 'time'
 
 class Enigma
+    include Generatable
 
-def encrypt(message, key = generate_random_key, date = Date.today.strftime('%d%m%y'))
-    # The encrypt method takes a message String as an argument. It can optionally take a Key and Date as
-    # arguments to use for encryption. If the key is not included, generate a random key.
-    # If the date is not included, use today’s date.
+    def encrypt(message, key = generate_random_key, date = Date.today.strftime('%d%m%y'))
+        # The encrypt method takes a message String as an argument. It can optionally take a Key and Date as
+        # arguments to use for encryption. If the key is not included, generate a random key.
+        # If the date is not included, use today’s date.
 
-    # The encrypt method returns a hash with three keys:
-        # :encryption => the encrypted String
-        # :key => the key used for encryption as a String
-        # :date => the date used for encryption as a String in the form DDMMYY
-        hash = {message: message, key: key, date: date}
-        # require 'pry'; binding.pry
-end
+        # The encrypt method returns a hash with three keys:
+            # :encryption => the encrypted String
+            # :key => the key used for encryption as a String
+            # :date => the date used for encryption as a String in the form DDMMYY
+            hash = {message: message, key: key, date: date}
+            # require 'pry'; binding.pry
+    end
 
     # def decrypt(message, key = generate_random_key, date = Date.now.strftime('%d%m%y'))
     # # Enigma#decrypt(ciphertext, key, date)
@@ -30,7 +32,4 @@ end
     # end
 
     #move this to a module
-    def generate_random_key
-        random_key = rand.to_s.slice(2..6)
-    end
 end
