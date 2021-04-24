@@ -4,7 +4,38 @@ require 'time'
 class Enigma
     include Generatable
 
-    def encrypt(message, key = generate_random_key, date = Date.today.strftime('%d%m%y'))
+    def encrypt(incoming_message, key = generate_random_key, date = Date.today.strftime('%d%m%y'))
+
+        encrypted_message = incoming_message.downcase.split('')
+        shift_hash = generate_shift_hash(key, date)
+        range = ('a'..'z').to_a
+        range << ''
+
+        encrypted_message.each_with_index.map do |element, index|
+            if range.include?(encrypted_message[index])
+                case index % 4
+                when 0
+                    range_index = range.index(encrypted_message[index])
+                    altered_range = range.rotate(shift_hash[:A])
+                    encrypted_message[index] = altered_range[range_index]
+                when 1
+                    range_index = range.index(encrypted_message[index])
+                    altered_range = range.rotate(shift_hash[:B])
+                    encrypted_message[index] = altered_range[range_index]
+                when 2
+                    range_index = range.index(encrypted_message[index])
+                    altered_range = range.rotate(shift_hash[:C])
+                    encrypted_message[index] = altered_range[range_index]
+                else
+                    range_index = range.index(encrypted_message[index])
+                    altered_range = range.rotate(shift_hash[:D])
+                    encrypted_message[index] = altered_range[range_index]
+                end
+            end
+        end
+        
+        encrypted_message = encrypted_message.join
+
         # The encrypt method takes a message String as an argument. It can optionally take a Key and Date as
         # arguments to use for encryption. If the key is not included, generate a random key.
         # If the date is not included, use today’s date.
@@ -13,7 +44,7 @@ class Enigma
             # :encryption => the encrypted String
             # :key => the key used for encryption as a String
             # :date => the date used for encryption as a String in the form DDMMYY
-            hash = {message: message, key: key, date: date}
+            hash = {message: encrypted_message, key: key, date: date}
             # require 'pry'; binding.pry
     end
 
