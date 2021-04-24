@@ -1,8 +1,8 @@
-require_relative 'generatable'
+require_relative 'encryptable'
 require 'time'
 
 class Enigma
-    include Generatable
+    include Encryptable
     attr_reader :range
 
     def initialize
