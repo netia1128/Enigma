@@ -3,52 +3,20 @@ require 'time'
 
 class Enigma
     include Generatable
+    attr_reader :range
 
-    def encrypt(incoming_message, key = generate_random_key, date = Date.today.strftime('%d%m%y'))
-
-        encrypted_message = incoming_message.downcase.split('')
-        shift_hash = generate_shift_hash(key, date)
-        range = ('a'..'z').to_a
-        range << ''
-
-        encrypted_message.each_with_index.map do |element, index|
-            if range.include?(encrypted_message[index])
-                case index % 4
-                when 0
-                    range_index = range.index(encrypted_message[index])
-                    altered_range = range.rotate(shift_hash[:A])
-                    encrypted_message[index] = altered_range[range_index]
-                when 1
-                    range_index = range.index(encrypted_message[index])
-                    altered_range = range.rotate(shift_hash[:B])
-                    encrypted_message[index] = altered_range[range_index]
-                when 2
-                    range_index = range.index(encrypted_message[index])
-                    altered_range = range.rotate(shift_hash[:C])
-                    encrypted_message[index] = altered_range[range_index]
-                else
-                    range_index = range.index(encrypted_message[index])
-                    altered_range = range.rotate(shift_hash[:D])
-                    encrypted_message[index] = altered_range[range_index]
-                end
-            end
-        end
-        
-        encrypted_message = encrypted_message.join
-
-        # The encrypt method takes a message String as an argument. It can optionally take a Key and Date as
-        # arguments to use for encryption. If the key is not included, generate a random key.
-        # If the date is not included, use today’s date.
-
-        # The encrypt method returns a hash with three keys:
-            # :encryption => the encrypted String
-            # :key => the key used for encryption as a String
-            # :date => the date used for encryption as a String in the form DDMMYY
-            hash = {message: encrypted_message, key: key, date: date}
-            # require 'pry'; binding.pry
+    def initialize
+      @range = ('a'..'z').to_a << ''
     end
 
-    # def decrypt(message, key = generate_random_key, date = Date.now.strftime('%d%m%y'))
+    def encrypt(incoming_message, key = generate_random_key, date = Date.today.strftime('%d%m%y'))
+      message = incoming_message.downcase.split('')
+      shifts_hash = generate_shift_hash(key, date)
+      encrypted_message = encrypt_message(message, shifts_hash[:shifts_array])
+      return_hash = {message: encrypted_message, key: shifts_hash[:key], date: shifts_hash[:date]}
+    end
+
+    def decrypt(encypted_message, key, date = Date.now.strftime('%d%m%y'))
     # # Enigma#decrypt(ciphertext, key, date)
     # # The decrypt method takes a ciphertext String and the Key used
     # # for encryption as arguments. The decrypt method can optionally take a date as the third argument.
@@ -60,7 +28,19 @@ class Enigma
     # # # :key => the key used for decryption as a String
     # # # :date => the date used for decryption as a String in the form DDMMYY
     # hash = {message: message, key: key, date: date}
-    # end
+    end
 
-    #move this to a module
+
+    private
+
+    def encrypt_message(message, shifts_array)
+      encrypted_message = message.map.with_index do |element, index|
+        if @range.include?(message[index])
+          altered_range = @range.rotate(shifts_array[index % 4])
+          message[index] = altered_range[@range.index(message[index])]
+        else
+          message[index]
+        end
+      end.join
+    end
 end

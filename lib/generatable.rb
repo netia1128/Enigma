@@ -23,14 +23,16 @@ module Generatable
     }
   end
 
-  def generate_shift_hash(key = random_key, date = Date.today.strftime('%d%m%y').to_i)
+  def generate_shift_hash(key = generate_random_key, date = Date.today.strftime('%d%m%y').to_i)
     key_hash = generate_key_hash(key)
     offset_hash = generate_offset_hash(date)
-    hash = {
-      A: key_hash[:A] + offset_hash[:A],
-      B: key_hash[:B] + offset_hash[:B],
-      C: key_hash[:C] + offset_hash[:C],
-      D: key_hash[:D] + offset_hash[:D],
-    }
+    shifts_array = [
+      key_hash[:A] + offset_hash[:A],
+      key_hash[:B] + offset_hash[:B],
+      key_hash[:C] + offset_hash[:C],
+      key_hash[:D] + offset_hash[:D],
+    ]
+    shifts_hash = {shifts_array: shifts_array, key: key, date: date}
+    # require 'pry'; binding.pry
   end
 end
