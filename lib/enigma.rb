@@ -6,7 +6,7 @@ class Enigma
     attr_reader :range
 
     def initialize
-      @range = ('a'..'z').to_a << ''
+      @range = ('a'..'z').to_a << " "
     end
 
     def encrypt(incoming_message, key = generate_random_key, date = Date.today.strftime('%d%m%y'))
@@ -16,7 +16,7 @@ class Enigma
       return_hash = {message: encrypted_message, key: shifts_hash[:key], date: shifts_hash[:date]}
     end
 
-    def decrypt(encrypted_message, key, date = Date.now.strftime('%d%m%y'))
+    def decrypt(encrypted_message, key, date = Date.today.strftime('%d%m%y'))
       message = encrypted_message.downcase.split('')
       shifts_hash = generate_shift_hash(key, date, -1)
       decrypted_message = transform_message(message, shifts_hash[:shifts_array])
