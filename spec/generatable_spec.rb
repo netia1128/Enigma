@@ -41,9 +41,8 @@ RSpec.describe Generatable do
       enigma = Enigma.new
 
       expect(enigma.generate_shift_hash).to be_a(Hash)
-      expect(enigma.generate_shift_hash.keys).to eq([:shifts_array, :key, :date)
-      expect(enigma.generate_shift_hash[:shifts_array].length).to be_between(4)
-      expect(enigma.generate_shift_hash.values.sum).to be < (432)
+      expect(enigma.generate_shift_hash.keys).to eq([:shifts_array, :key, :date])
+      expect(enigma.generate_shift_hash[:shifts_array].length).to eq(4)
     end
   end
 end
