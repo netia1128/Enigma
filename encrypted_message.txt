@@ -1,1 +1,1 @@
-{:message=>"keder ohulw.", :key=>"02715", :date=>"040895"}
+keder ohulw.

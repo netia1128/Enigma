@@ -9,13 +9,15 @@ handle.close
 
 enigma = Enigma.new
 
-encrypted_message = enigma.encrypt(incoming_message, '02715', '040895')
+encryption_report = enigma.encrypt(incoming_message, '02715', '040895')
 # encrypted_message = enigma.encrypt(incoming_message)
 
 writer = File.open(ARGV[1], 'w')
 
-writer.write(encrypted_message)
+writer.write(encryption_report[:message])
 
 writer.close
 
-puts encrypted_message
+puts encryption_report
+
+# ruby encrypt.rb message_to_encrypt.txt encrypted_message.txt

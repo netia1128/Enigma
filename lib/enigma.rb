@@ -17,18 +17,14 @@ class Enigma
       return_hash = {message: encrypted_message, key: shifts_hash[:key], date: shifts_hash[:date]}
     end
 
-    def decrypt(encypted_message, key, date = Date.now.strftime('%d%m%y'))
-    # # Enigma#decrypt(ciphertext, key, date)
-    # # The decrypt method takes a ciphertext String and the Key used
-    # # for encryption as arguments. The decrypt method can optionally take a date as the third argument.
-    # #     If no date is given, this method should use today’s date for decryption.
-
+    def decrypt(encrypted_message, key, date = Date.now.strftime('%d%m%y'))
+      decrypted_message = encrypted_message
     # # The decrypt method returns a hash with three keys:
 
     # # :decryption => the decrypted String
     # # # :key => the key used for decryption as a String
     # # # :date => the date used for decryption as a String in the form DDMMYY
-    # hash = {message: message, key: key, date: date}
+    return_hash = {message: encrypted_message, key: key, date: date}
     end
 
 
