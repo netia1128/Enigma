@@ -18,6 +18,6 @@ writer.write(encryption_report[:message])
 
 writer.close
 
-puts encryption_report
+puts "Created #{ARGV[1]} with the key #{encryption_report[:key]} and date #{encryption_report[:date]}"
 
 # ruby encrypt.rb message_to_encrypt.txt encrypted_message.txt
