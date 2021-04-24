@@ -9,7 +9,55 @@ class Enigma
         encrypted_message = incoming_message.downcase.split('')
         shift_hash = generate_shift_hash(key, date)
         range = ('a'..'z').to_a
-         require 'pry'; binding.pry
+        range << ''
+
+        message_length = encrypted_message.count
+
+        times_to_loop_hash = {
+            A: (message_length / 4) + (message_length % 4 > 0 ? 1 : 0),
+            B: (message_length / 4) + (message_length % 4 > 1 ? 1 : 0),
+            C: (message_length / 4) + (message_length % 4 > 2 ? 1 : 0),
+            D: (message_length / 4) + (message_length % 4 > 3 ? 1 : 0),
+        }
+
+        count = 0
+        times_to_loop_hash[:A].times do
+            if range.include?(encrypted_message[count]) && encrypted_message[count] != ''
+                index = range.index(encrypted_message[count])
+                altered_range = range.rotate(shift_hash[:A])
+                encrypted_message[count] = altered_range[index]
+            end
+            count += 4
+        end
+        count = 1
+        times_to_loop_hash[:B].times do
+            if range.include?(encrypted_message[count]) && encrypted_message[count]
+                index = range.index(encrypted_message[count])
+                altered_range = range.rotate(shift_hash[:B])
+                encrypted_message[count] = altered_range[index]
+            end
+            count += 4
+        end
+        count = 2
+        times_to_loop_hash[:C].times do
+            if range.include?(encrypted_message[count]) && encrypted_message[count] != ''
+                index = range.index(encrypted_message[count])
+                altered_range = range.rotate(shift_hash[:C])
+                encrypted_message[count] = altered_range[index]
+            end
+            count += 4
+        end
+        count = 3
+        times_to_loop_hash[:D].times do
+            if range.include?(encrypted_message[count]) && encrypted_message[count] != ''
+                index = range.index(encrypted_message[count])
+                altered_range = range.rotate(shift_hash[:D])
+                encrypted_message[count] = altered_range[index]
+            end
+            count += 4
+        end
+
+        require 'pry'; binding.pry
 
         # The encrypt method takes a message String as an argument. It can optionally take a Key and Date as
         # arguments to use for encryption. If the key is not included, generate a random key.
