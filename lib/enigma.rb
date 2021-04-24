@@ -4,7 +4,13 @@ require 'time'
 class Enigma
     include Generatable
 
-    def encrypt(message, key = generate_random_key, date = Date.today.strftime('%d%m%y'))
+    def encrypt(incoming_message, key = generate_random_key, date = Date.today.strftime('%d%m%y'))
+
+        encrypted_message = incoming_message.downcase.split('')
+        shift_hash = generate_shift_hash(key, date)
+        range = ('a'..'z').to_a
+         require 'pry'; binding.pry
+
         # The encrypt method takes a message String as an argument. It can optionally take a Key and Date as
         # arguments to use for encryption. If the key is not included, generate a random key.
         # If the date is not included, use today’s date.
@@ -13,7 +19,7 @@ class Enigma
             # :encryption => the encrypted String
             # :key => the key used for encryption as a String
             # :date => the date used for encryption as a String in the form DDMMYY
-            hash = {message: message, key: key, date: date}
+            hash = {message: encrypted_message, key: key, date: date}
             # require 'pry'; binding.pry
     end
 
