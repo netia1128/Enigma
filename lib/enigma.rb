@@ -1,9 +1,8 @@
-require_relative 'encryptable'
-require_relative 'decryptable'
+require_relative 'generatable'
 require 'time'
 
 class Enigma
-    include Encryptable
+    include Generatable
     attr_reader :range
 
     def initialize
@@ -12,26 +11,22 @@ class Enigma
 
     def encrypt(incoming_message, key = generate_random_key, date = Date.today.strftime('%d%m%y'))
       message = incoming_message.downcase.split('')
-      shifts_hash = generate_shift_hash(key, date)
-      encrypted_message = encrypt_message(message, shifts_hash[:shifts_array])
+      shifts_hash = generate_shift_hash(key, date, 1)
+      encrypted_message = transform_message(message, shifts_hash[:shifts_array])
       return_hash = {message: encrypted_message, key: shifts_hash[:key], date: shifts_hash[:date]}
     end
 
     def decrypt(encrypted_message, key, date = Date.now.strftime('%d%m%y'))
-      decrypted_message = encrypted_message
-    # # The decrypt method returns a hash with three keys:
-
-    # # :decryption => the decrypted String
-    # # # :key => the key used for decryption as a String
-    # # # :date => the date used for decryption as a String in the form DDMMYY
-    return_hash = {message: encrypted_message, key: key, date: date}
+      message = encrypted_message.downcase.split('')
+      shifts_hash = generate_shift_hash(key, date, -1)
+      decrypted_message = transform_message(message, shifts_hash[:shifts_array])
+      return_hash = {message: decrypted_message, key: key, date: date}
     end
-
 
     private
 
-    def encrypt_message(message, shifts_array)
-      encrypted_message = message.map.with_index do |element, index|
+    def transform_message(message, shifts_array)
+      transformed_message = message.map.with_index do |element, index|
         if @range.include?(message[index])
           altered_range = @range.rotate(shifts_array[index % 4])
           message[index] = altered_range[@range.index(message[index])]

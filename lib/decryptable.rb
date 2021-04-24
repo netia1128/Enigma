@@ -1,3 +1,0 @@
-module Decryptable
-
-end

@@ -1,9 +1,9 @@
 require 'simplecov'
 SimpleCov.start
 require './lib/enigma'
-require './lib/encryptable'
+require './lib/generatable'
 
-RSpec.describe Encryptable do
+RSpec.describe Generatable do
   describe '#generate_random_key' do
     it 'can generate a random 5 digit number' do
       enigma = Enigma.new
@@ -40,9 +40,9 @@ RSpec.describe Encryptable do
     it 'can generate shifts' do
       enigma = Enigma.new
 
-      expect(enigma.generate_shift_hash).to be_a(Hash)
-      expect(enigma.generate_shift_hash.keys).to eq([:shifts_array, :key, :date])
-      expect(enigma.generate_shift_hash[:shifts_array].length).to eq(4)
+      expect(enigma.generate_shift_hash(1)).to be_a(Hash)
+      expect(enigma.generate_shift_hash(1).keys).to eq([:shifts_array, :key, :date])
+      expect(enigma.generate_shift_hash(1)[:shifts_array].length).to eq(4)
     end
   end
 end

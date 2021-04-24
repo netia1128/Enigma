@@ -17,5 +17,7 @@ writer.write(decryption_report[:message])
 
 writer.close
 
-puts "Created #{ARGV[1]} with the key #{decryption_report[:key]} and date #{decryption_report[:date]}"
+puts decryption_report[:message]
+
+# puts "Created #{ARGV[1]} with the key #{decryption_report[:key]} and date #{decryption_report[:date]}"
 # ruby decrypt.rb encrypted_message.txt decrypted_message.txt
