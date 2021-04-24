@@ -1,10 +1,15 @@
+require './lib/enigma'
+
+
 handle = File.open(ARGV[0], 'r')
 
 incoming_message = handle.read
 
 handle.close
 
-encrypted_message = incoming_message.downcase
+enigma = Enigma.new
+
+encrypted_message = enigma.encrypt(incoming_message, '02715', '040895')
 
 writer = File.open(ARGV[1], 'w')
 
