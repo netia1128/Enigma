@@ -1,4 +1,5 @@
 require_relative 'encryptable'
+require_relative 'decryptable'
 require 'time'
 
 class Enigma
