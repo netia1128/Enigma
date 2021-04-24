@@ -1,7 +1,7 @@
 require 'simplecov'
 SimpleCov.start
 require './lib/enigma'
-require './lib/generatable'
+require './lib/shift_generator'
 
 RSpec.describe Enigma do
   describe '#initialize' do
