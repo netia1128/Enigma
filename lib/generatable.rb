@@ -36,6 +36,7 @@ module Generatable
       (key_hash[:C] + offset_hash[:C]) * encrypt_decrypt_command,
       (key_hash[:D] + offset_hash[:D]) * encrypt_decrypt_command,
     ]
+    require 'pry'; binding.pry
     shifts_hash = {shifts_array: shifts_array, key: key, date: date}
   end
 
@@ -73,54 +74,62 @@ module Generatable
       end
     end
 
-    key_hash = {
-      A: shift_hash[:A] - offset_hash[:A],
-      B: shift_hash[:B] - offset_hash[:B],
-      C: shift_hash[:C] - offset_hash[:C],
-      D: shift_hash[:D] - offset_hash[:D]
-    }
+    shifts_array = [shift_hash[:A].to_i, shift_hash[:B].to_i, shift_hash[:C].to_i, shift_hash[:D].to_i]
 
-    key_arr = [key_hash[:A], key_hash[:B], key_hash[:C], key_hash[:D]]
-
-    key_arr = key_arr.map do |key|
-      key.to_s
+    shifts_array = shifts_array.map do |element|
+      element * -1
     end
 
-    if key_arr[0].to_i < 10
-      key_arr[0] = '0' + key_arr[0]
-    end
+  #   key_hash = {
+  #     A: shift_hash[:A] - offset_hash[:A],
+  #     B: shift_hash[:B] - offset_hash[:B],
+  #     C: shift_hash[:C] - offset_hash[:C],
+  #     D: shift_hash[:D] - offset_hash[:D]
+  #   }
 
-    if key_arr[1].to_i == 0
-      key_arr[1] = '7'
-    else
-      if key_arr[0].include?(key_arr[1][0])
-        key_arr[1] = key_arr[1][1]
-      else
-        key_arr[1] = key_arr[1][0]
-      end
-    end
+  #   key_arr = [key_hash[:A], key_hash[:B], key_hash[:C], key_hash[:D]]
 
-    if key_arr[2].to_i == 0
-      key_arr[2] = '7'
-    else
-      if key_arr[1].include?(key_arr[2][0])
-        key_arr[2] = key_arr[2][1]
-      else
-        key_arr[2] = key_arr[2][0]
-      end
-    end
+  #   key_arr = key_arr.map do |key|
+  #     key.to_s
+  #   end
 
-    if key_arr[3].to_i == 0
-      key_arr[3] = '7'
-    else
-      if key_arr[2].include?(key_arr[3][0])
-        key_arr[3] = key_arr[3][1]
-      else
+  #   if key_arr[0].to_i < 10
+  #     key_arr[0] = '0' + key_arr[0]
+  #   end
 
-        key_arr[3] = key_arr[3][0]
-      end
-    end
-  key = key_arr.join
+  #   if key_arr[1].to_i == 0
+  #     key_arr[1] = '7'
+  #   elsif key_arr[1].to_i < 10
+  #     key_arr[1]
+  #   else
+  #     if key_arr[0].include?(key_arr[1][0])
+  #       key_arr[1] = key_arr[1][1]
+  #     else
+  #       key_arr[1] = key_arr[1][0]
+  #     end
+  #   end
+
+  #   if key_arr[2].to_i < 10
+  #     key_arr[2]
+  #   else
+  #     if key_arr[1].include?(key_arr[2][0])
+  #       key_arr[2] = key_arr[2][1]
+  #     else
+  #       key_arr[2] = key_arr[2][0]
+  #     end
+  #   end
+
+  #   if key_arr[3].to_i < 10
+  #     key_arr[3]
+  #   else
+  #     if key_arr[2].include?(key_arr[3][0])
+  #       key_arr[3] = key_arr[3][1]
+  #     else
+
+  #       key_arr[3] = key_arr[3][0]
+  #     end
+  #   end
+  # key = key_arr.join
   end
 end
 

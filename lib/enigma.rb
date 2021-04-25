@@ -14,6 +14,7 @@ class Enigma
       shifts_hash = generate_shift_hash(key, date, 1)
       encrypted_message = transform_message(message, shifts_hash[:shifts_array])
       return_hash = {message: encrypted_message, key: shifts_hash[:key], date: shifts_hash[:date]}
+      # require 'pry'; binding.pry
     end
 
     def decrypt(encrypted_message, key, date = Date.today.strftime('%d%m%y'))
@@ -23,11 +24,19 @@ class Enigma
       return_hash = {message: decrypted_message, key: key, date: date}
     end
 
+    def crack(encrypted_message, shifts_array, date = Date.today.strftime('%d%m%y'))
+      message = encrypted_message.downcase.split('')
+      decrypted_message = transform_message(message, shifts_array)
+      return_hash = {message: decrypted_message, date: date}
+    end
+
+
     private
 
     def transform_message(message, shifts_array)
       transformed_message = message.map.with_index do |element, index|
         if @range.include?(message[index])
+          # require 'pry'; binding.pry
           altered_range = @range.rotate(shifts_array[index % 4])
           message[index] = altered_range[@range.index(message[index])]
         else
@@ -35,12 +44,4 @@ class Enigma
         end
       end.join
     end
-
-    #take a range, a - z
-    #shift it by a number. if your shift is 3, you shift 3 off the front of the range so it starts with d
-    #find the position of the element in question in the original range
-    #find the letter in that same position in the altered range
-
-    #imagine your position is 3
-    #in the altered range the position is now 19
 end
