@@ -37,6 +37,93 @@ module Generatable
       (key_hash[:D] + offset_hash[:D]) * encrypt_decrypt_command,
     ]
     shifts_hash = {shifts_array: shifts_array, key: key, date: date}
-    # require 'pry'; binding.pry
+  end
+
+  def generate_cracked_key(message, date)
+    range = ('a'..'z').to_a << " "
+    shift_hash = {}
+    offset_hash = generate_offset_hash(date)
+
+    message.slice(-4..-1).split('').each do |letter|
+      case message.rindex(letter) % 4
+      when 0
+        shift_hash[:A] = if range.index(letter) >= 4
+          range.index(letter) - 4
+        else
+          range.rotate(range.index(letter) - 4).reverse.index(' ')
+        end
+      when 1
+        shift_hash[:B] = if range.index(letter) >= 13
+          range.index(letter) - 13
+        else
+          range.rotate(range.index(letter) - 13).reverse.index(' ')
+        end
+      when 2
+        shift_hash[:C] = if range.index(letter) >= 3
+          range.index(letter) - 3
+        else
+          range.rotate(range.index(letter) - 3).reverse.index(' ')
+        end
+      else
+        shift_hash[:D] = if range.index(letter) == 26
+          0
+        else
+          range.rotate(range.index(letter) - 26).reverse.index(' ')
+        end
+      end
+    end
+
+    key_hash = {
+      A: shift_hash[:A] - offset_hash[:A],
+      B: shift_hash[:B] - offset_hash[:B],
+      C: shift_hash[:C] - offset_hash[:C],
+      D: shift_hash[:D] - offset_hash[:D]
+    }
+
+    key_arr = [key_hash[:A], key_hash[:B], key_hash[:C], key_hash[:D]]
+
+    key_arr = key_arr.map do |key|
+      key.to_s
+    end
+
+    if key_arr[0].to_i < 10
+      key_arr[0] = '0' + key_arr[0]
+    end
+
+    if key_arr[1].to_i == 0
+      key_arr[1] = '7'
+    else
+      if key_arr[0].include?(key_arr[1][0])
+        key_arr[1] = key_arr[1][1]
+      else
+        key_arr[1] = key_arr[1][0]
+      end
+    end
+
+    if key_arr[2].to_i == 0
+      key_arr[2] = '7'
+    else
+      if key_arr[1].include?(key_arr[2][0])
+        key_arr[2] = key_arr[2][1]
+      else
+        key_arr[2] = key_arr[2][0]
+      end
+    end
+
+    if key_arr[3].to_i == 0
+      key_arr[3] = '7'
+    else
+      if key_arr[2].include?(key_arr[3][0])
+        key_arr[3] = key_arr[3][1]
+      else
+
+        key_arr[3] = key_arr[3][0]
+      end
+    end
+  key = key_arr.join
   end
 end
+
+
+
+# require 'pry'; binding.pry

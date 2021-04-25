@@ -1,6 +1,5 @@
 require './lib/enigma'
 
-
 handle = File.open(ARGV[0], 'r')
 
 incoming_message = handle.read

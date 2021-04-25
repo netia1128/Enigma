@@ -35,4 +35,12 @@ class Enigma
         end
       end.join
     end
+
+    #take a range, a - z
+    #shift it by a number. if your shift is 3, you shift 3 off the front of the range so it starts with d
+    #find the position of the element in question in the original range
+    #find the letter in that same position in the altered range
+
+    #imagine your position is 3
+    #in the altered range the position is now 19
 end
