@@ -7,7 +7,12 @@ require './lib/generatable'
 RSpec.describe Cracker do
   describe '#initialize' do
     it 'exists' do
-      cracker = Cracker.new('keder ohulwthnw', '040895')
+      # cracker = Cracker.new('ctdnjooqm wb bw', '260421')
+      # cracker = Cracker.new('keder ohulwthnw', '040895')
+      # cracker = Cracker.new('ajsvhecykqkjysk', '240421')
+      # cracker = Cracker.new('bvpeiq hlbhtzdh', '260421')
+      cracker = Cracker.new('w xqcvhtfgpetip', '260421')
+      # cracker = Cracker.new('rxfeysqhadytofy', '260421')
 
       expect(cracker).to be_a(Cracker)
     end
@@ -29,13 +34,27 @@ RSpec.describe Cracker do
   #   end
   # end
 
-  describe '#finalize_cracked_shifts_hash' do
-    it 'determines final shifts that can be used for decrypting' do
-      cracker = Cracker.new('keder ohulwthnw', '040895')
+  # describe '#finalize_cracked_shifts_hash' do
+  #   it 'determines final shifts that can be used for decrypting' do
+  #     # cracker = Cracker.new('ctdnjooqm wb bw', '260421')
+  #     # cracker = Cracker.new('keder ohulwthnw', '040895')
+  #     cracker = Cracker.new('rxfeysqhadytofy', '260421')
 
-      expect(cracker.shifts_hash.count).to eq(4)
-      expect(cracker.shifts_hash[:A]).to be_a(Integer)
-      expect(cracker.shifts_hash[:A]).to be < (28)
-    end
-  end
+  #     expect(cracker.shifts_hash.count).to eq(4)
+  #     expect(cracker.shifts_hash[:A]).to be_a(Integer)
+  #     expect(cracker.shifts_hash[:A]).to be < (28)
+  #   end
+  # end
+
+  # describe '#decrypt_message' do
+  #   it 'decrypts the message' do
+  #     # cracker = Cracker.new('ctdnjooqm wb bw', '260421')
+  #     # cracker = Cracker.new('keder ohulwthnw', '040895')
+  #     cracker = Cracker.new('rxfeysqhadytofy', '260421')
+
+  #     expect(cracker.shifts_hash.count).to eq(4)
+  #     expect(cracker.shifts_hash[:A]).to be_a(Integer)
+  #     expect(cracker.shifts_hash[:A]).to be < (28)
+  #   end
+  # end
 end

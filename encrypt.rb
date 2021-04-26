@@ -9,7 +9,7 @@ handle.close
 enigma = Enigma.new
 
 # encryption_report = enigma.encrypt(incoming_message, '02715', '040895')
- encryption_report = enigma.encrypt(incoming_message, '13036', '240421')
+  encryption_report = enigma.encrypt(incoming_message)
 
 writer = File.open(ARGV[1], 'w')
 

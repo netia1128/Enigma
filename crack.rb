@@ -7,7 +7,7 @@ handle = File.open(ARGV[0], 'r')
 
 incoming_message = handle.read
 date = ARGV[2]
-shifts_array = generate_cracked_key(incoming_message, date)
+# shifts_array = generate_cracked_key(incoming_message, date)
 # key = generate_cracked_key(incoming_message, date)
 
 handle.close
