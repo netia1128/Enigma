@@ -2,7 +2,8 @@ require_relative 'enigma'
 
 class Cracker
   include Generatable
-  attr_reader :shifts_hash
+  attr_reader :key,
+              :shifts_hash
 
   def initialize(encrypted_message, date)
     @encrypted_message = encrypted_message
@@ -34,12 +35,6 @@ class Cracker
       end
     end
     @shifts_array = [-shifts_hash[:A], -shifts_hash[:B], -shifts_hash[:C], -shifts_hash[:D]]
-    decrypt_message
-  end
-
-  def decrypt_message
-    enigma = Enigma.new
-    @decrypted_message = enigma.crack(@encrypted_message, @shifts_array, @date)
     generate_key_hash
   end
 
@@ -51,11 +46,16 @@ class Cracker
       C: @shifts_hash[:C] - offset_hash[:C],
       D: @shifts_hash[:D] - offset_hash[:D]
     }
+
+    key_hash.each do |key, value|
+      if value.to_i < 0
+        key_hash[key] = (value.to_i + 27)
+      end
+    end
     generate_key(key_hash)
   end
 
   def generate_key(key_hash)
-
     @key_arr = [key_hash[:A], key_hash[:B], key_hash[:C], key_hash[:D]]
     @key_arr = @key_arr.map do |num|
      '%02d' % num
@@ -98,48 +98,6 @@ class Cracker
     end
 
     @key = "#{@key_arr[0]}#{@key_arr[2]}#{@key_arr[3][1]}"
-    enigma = Enigma.new
-    require 'pry'; binding.pry
-    # if @decrypted_message != enigma.decrypt(@encrypted_message, @key, @date)[:message]
-    #   index = 0
-    #   big_attempts = 0
-    #   small_attempts = 0
-
-    #   until big_attempts == 3 do
-    #     until small_attempts == 6 do
-    #       if @key_arr[index][1] != @key_arr[index + 1][0]
-    #         if small_attempts == 0
-    #           try_right(index)
-    #         elsif small_attempts == 1 && @key_arr[0].to_i + 27 < 99
-    #           @key_arr[0] = (@key_arr[0].to_i + 27).to_s
-    #           try_getting_sides_to_match(index)
-    #         elsif small_attempts == 2 && @key_arr[1].to_i + 27 < 99
-    #           @key_arr[1] = (@key_arr[1].to_i + 27).to_s
-    #           try_getting_sides_to_match(index)
-    #         elsif small_attempts == 3 && @key_arr[0].to_i + 27 < 99
-        #       @key_arr[0] = (@key_arr[0].to_i + 27).to_s
-        #       try_getting_sides_to_match(index)
-        #     elsif small_attempts == 4 && @key_arr[1].to_i + 27 < 99
-        #       @key_arr[1] = (@key_arr[1].to_i + 27).to_s
-        #       try_getting_sides_to_match(index)
-        #     elsif small_attempts == 5 && @key_arr[0].to_i + 27 < 99
-        #       @key_arr[0] = (@key_arr[0].to_i + 27).to_s
-        #       try_getting_sides_to_match(index)
-        #     elsif small_attempts == 6 && @key_arr[1].to_i + 27 < 99
-        #       @key_arr[1] = (@key_arr[1].to_i + 27).to_s
-        #       try_getting_sides_to_match(index)
-        #     end
-        #   else
-        #   end
-        #   small_attempts +=1
-        # end
-    #     index += 1
-    #     big_attempts += 1
-    #     small_attempts = 0
-    #   end
-    # end
-    #   @key = "#{@key_arr[0]}#{@key_arr[2]}#{@key_arr[3][1]}"
-    # require 'pry'; binding.pry
   end
 
   def increment_right_side_to_match(index)
@@ -188,28 +146,6 @@ class Cracker
       end
     end
   end
-
-  # def try_right(index)
-  #   @key_arr_start = ''
-  #   note_key_start_value(index)
-
-  #   if @key_arr[index][1] == @key_arr[index + 1][0]
-  #     #if it worked, keep it
-  #     @key_arr[index]
-  #   else
-  #     #if it didnt work, try resetting the left side incrementing the right side to match the left
-  #     note_key_start_value(index + 1)
-  #     increment_right_side_to_match(index)
-
-  #     if @key_arr[index][1] == @key_arr[index + 1][0]
-  #       #if it worked, keep the right side set to whatever it is now
-  #       @key_arr[index + 1]
-  #     else
-  #       #if it didn't work, reset the left side and go back to the big looper
-  #       reset_key_start_value(index + 1)
-  #     end
-  #   end
-  # end
 
   private
 
