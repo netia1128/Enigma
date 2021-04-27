@@ -20,7 +20,7 @@ class Cracker
     shifts_hash = determine_shifts_hash(pre_shifts_hash)
     key_hash = determine_key_hash(shifts_hash)
     key_array = determine_key_array(key_hash)
-    @key = generate_key
+    # @key = generate_key
   end
 
   def determine_shift_hash_order
@@ -77,10 +77,10 @@ class Cracker
   end
 
   def determine_key_array(key_hash)
-  #   # @key_arr = [key_hash[:A], key_hash[:B], key_hash[:C], key_hash[:D]]
-  #   # @key_arr = @key_arr.map do |num|
-  #   #   '%02d' % num
-  #   # end
+    @key_arr = [key_hash[:A], key_hash[:B], key_hash[:C], key_hash[:D]]
+    @key_arr = @key_arr.map do |num|
+      '%02d' % num
+    end
   end
 
   # def generate_key

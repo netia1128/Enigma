@@ -52,12 +52,12 @@ RSpec.describe Cracker do
   end
 
   describe '#determine_key_array' do
-    it 'generates a non-negative key hash' do
+    it 'turns the key hash into a formatted array' do
       cracker = Cracker.new('keder ohulwthnw', '040895')
       key_hash = {:A=>2, :B=>0, :C=>17, :D=>15}
-      key_array = []
+      key_array = ["02", "00", "17", "15"]
 
-      expect(cracker.determine_key_array(key_hash)).to eq(key_hash)
+      expect(cracker.determine_key_array(key_hash)).to eq(key_array)
     end
   end
 
