@@ -18,13 +18,11 @@ class Enigma
       return_hash = {message: decrypted_message, key: key, date: date}
     end
 
-    private
-
     def transform_message(message, shifts_array)
       range = ('a'..'z').to_a << " "
       transformed_message = message.map.with_index do |element, index|
         if range.include?(message[index])
-          altered_range = @range.rotate(shifts_array[index % 4])
+          altered_range = range.rotate(shifts_array[index % 4])
           message[index] = altered_range[range.index(message[index])]
         else
           message[index]
