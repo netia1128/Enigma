@@ -19,7 +19,7 @@ handle.close
 
 enigma = Enigma.new
 
-cracked_report = enigma.decrypt(incoming_message, key)
+cracked_report = enigma.decrypt(incoming_message, key, date)
 
 writer = File.open(ARGV[1], 'w')
 
@@ -29,6 +29,6 @@ writer.close
 
 puts cracked_report[:message]
 
- puts "Created #{ARGV[1]} with the key #{cracked_report[:key]} and date #{cracked_report[:date]}"
+puts "Created #{ARGV[1]} with the key #{cracked_report[:key]} and date #{cracked_report[:date]}"
 
 # ruby crack.rb encrypted_message.txt cracked.txt
