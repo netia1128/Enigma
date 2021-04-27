@@ -8,43 +8,65 @@ class Cracker
   def initialize(encrypted_message, date)
     @encrypted_message = encrypted_message
     @decrypted_message = ''
-    @cracker_target = encrypted_message.slice(-4..-1).split('')
     @date = date
-    @range = ('a'..'z').to_a << " "
-    @shifts_hash = {}
-    @shifts_hash_key_index = {'0' => [' ', 26] , '1' => ['e', 4], '2' => ['n', 13], '3' => ['d', 3]}
     @shifts_array = []
     @key_arr = []
     @key_arr_start = ''
     @key = ''
-    determine_shifts_hash_placement_for_cracker_target
+    cracker_sequence
   end
 
-  def finalize_cracked_shifts_hash
-    @shifts_hash.each_with_index do |(key, value), index|
-      encrypted_letter_range_index = @range.index(value[0])
-      decrypted_letter_range_index = @shifts_hash_key_index[value[1].to_s][1]
-      @shifts_hash[key] = if encrypted_letter_range_index >= decrypted_letter_range_index
-        encrypted_letter_range_index - decrypted_letter_range_index
+  def cracker_sequence
+    pre_shifts_hash = determine_shift_hash_order
+    shift_hash = determine_shifts_hash(pre_shifts_hash)
+  end
+
+  def determine_shift_hash_order
+    pre_shifts_hash = {}
+    index = -4
+    4.times do
+      letter = @encrypted_message.slice(index)
+        case (@encrypted_message.length + index) % 4
+        when 0
+          pre_shifts_hash[:A] = [letter, 4 + index]
+        when 1
+          pre_shifts_hash[:B] = [letter, 4 + index]
+        when 2
+          pre_shifts_hash[:C] = [letter, 4 + index]
+        else
+          pre_shifts_hash[:D] = [letter, 4 + index]
+        end
+      index += 1
+    end
+    pre_shifts_hash
+  end
+
+  def determine_shifts_hash(pre_shifts_hash)
+    decryption_key = {'0' => [' ', 26] , '1' => ['e', 4], '2' => ['n', 13], '3' => ['d', 3]}
+    range = ('a'..'z').to_a << " "
+    shifts_hash = {}
+    pre_shifts_hash.each_with_index do |(key, value), index|
+      encrypted_letter = range.index(value[0])
+      decrypted_letter = decryption_key[value[1].to_s]
+      shifts_hash[key] = if encrypted_letter >= decrypted_letter[1]
+        encrypted_letter - decrypted_letter[1]
       else
-        # altered_range = @range.rotate(encrypted_letter_range_index - decrypted_letter_range_index)
-        altered_range = @range.rotate(encrypted_letter_range_index + 1 - 27)
-        # require 'pry'; binding.pry
-        26 - altered_range.index(@shifts_hash_key_index[value[1].to_s][0])
-        # altered_range.reverse.index(@shifts_hash_key_index[value[1].to_s][0])
+        altered_range = range.rotate(encrypted_letter + 1 - 27)
+        26 - altered_range.index(decrypted_letter[0])
       end
     end
-    @shifts_array = [-shifts_hash[:A], -shifts_hash[:B], -shifts_hash[:C], -shifts_hash[:D]]
-    generate_key_hash
+    shifts_hash
   end
 
-  def generate_key_hash
+
+  def generate_key_hash(shifts_hash)
     offset_hash = generate_offset_hash(@date)
+    # require 'pry'; binding.pry
       key_hash = {
-      A: @shifts_hash[:A] - offset_hash[:A],
-      B: @shifts_hash[:B] - offset_hash[:B],
-      C: @shifts_hash[:C] - offset_hash[:C],
-      D: @shifts_hash[:D] - offset_hash[:D]
+      A: shifts_hash[:A] - offset_hash[:A],
+      B: shifts_hash[:B] - offset_hash[:B],
+      C: shifts_hash[:C] - offset_hash[:C],
+      D: shifts_hash[:D] - offset_hash[:D]
     }
 
     key_hash.each do |key, value|
@@ -149,23 +171,5 @@ class Cracker
 
   private
 
-  def determine_shifts_hash_placement_for_cracker_target
 
-    index = -4
-    4.times do
-      letter = @encrypted_message.slice(index)
-        case (@encrypted_message.length + index) % 4
-        when 0
-          @shifts_hash[:A] = [letter, 4 + index]
-        when 1
-          @shifts_hash[:B] = [letter, 4 + index]
-        when 2
-          @shifts_hash[:C] = [letter, 4 + index]
-        else
-          @shifts_hash[:D] = [letter, 4 + index]
-        end
-      index += 1
-    end
-    finalize_cracked_shifts_hash
-    end
 end
