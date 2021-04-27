@@ -36,7 +36,7 @@ module Generatable
       (key_hash[:C] + offset_hash[:C]) * encrypt_decrypt_command,
       (key_hash[:D] + offset_hash[:D]) * encrypt_decrypt_command,
     ]
+
     shifts_hash = {shifts_array: shifts_array, key: key, date: date}
-    # require 'pry'; binding.pry
   end
 end

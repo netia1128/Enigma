@@ -3,11 +3,6 @@ require 'time'
 
 class Enigma
     include Generatable
-    attr_reader :range
-
-    def initialize
-      @range = ('a'..'z').to_a << " "
-    end
 
     def encrypt(incoming_message, key = generate_random_key, date = Date.today.strftime('%d%m%y'))
       message = incoming_message.downcase.split('')
@@ -26,10 +21,11 @@ class Enigma
     private
 
     def transform_message(message, shifts_array)
+      range = ('a'..'z').to_a << " "
       transformed_message = message.map.with_index do |element, index|
-        if @range.include?(message[index])
+        if range.include?(message[index])
           altered_range = @range.rotate(shifts_array[index % 4])
-          message[index] = altered_range[@range.index(message[index])]
+          message[index] = altered_range[range.index(message[index])]
         else
           message[index]
         end
