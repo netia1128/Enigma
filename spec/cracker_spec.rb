@@ -61,17 +61,22 @@ RSpec.describe Cracker do
     end
   end
 
-  # describe '#finalize_cracked_shifts_hash' do
-  #   it 'determines final shifts that can be used for decrypting' do
-  #     # cracker = Cracker.new('ctdnjooqm wb bw', '260421')
-  #     # cracker = Cracker.new('keder ohulwthnw', '040895')
-  #     cracker = Cracker.new('rxfeysqhadytofy', '260421')
+  describe '#determine_key' do
+    it 'finds the key' do
+      cracker1 = Cracker.new('keder ohulwthnw', '040895')
+      cracker2 = Cracker.new('w xqcvhtfgpetip', '260421')
+      cracker3 = Cracker.new('rxfeysqhadytofy', '260421')
+      cracker4 = Cracker.new('ctdnjooqm wb bw', '260421')
+      cracker5 = Cracker.new('ajsvhecykqkjysk', '240421')
 
-  #     expect(cracker.shifts_hash.count).to eq(4)
-  #     expect(cracker.shifts_hash[:A]).to be_a(Integer)
-  #     expect(cracker.shifts_hash[:A]).to be < (28)
-  #   end
-  # end
+
+      expect(cracker1.determine_key).to eq('02715')
+      expect(cracker2.determine_key).to eq('62085')
+      expect(cracker3.determine_key).to eq('84446')
+      expect(cracker4.determine_key).to eq('69428')
+      expect(cracker5.determine_key).to eq('40309')
+    end
+  end
 
   # describe '#decrypt_message' do
   #   it 'decrypts the message' do
