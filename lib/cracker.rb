@@ -85,40 +85,14 @@ class Cracker
 
   def determine_key
     index = 0
-    small_attempts = 0
-
     3.times do
-      until small_attempts == 6 do
-        if @key_arr[index][1] != @key_arr[index + 1][0]
-          if small_attempts == 0
-            try_getting_sides_to_match(index)
-          elsif small_attempts == 1 && @key_arr[0].to_i + 27 < 99
+      try_getting_sides_to_match(index)
+      until @key_arr[index][1] == @key_arr[index + 1][0]
             @key_arr[0] = (@key_arr[0].to_i + 27).to_s
             try_getting_sides_to_match(index)
-          elsif small_attempts == 2 && @key_arr[1].to_i + 27 < 99
-            @key_arr[1] = (@key_arr[1].to_i + 27).to_s
-            try_getting_sides_to_match(index)
-          elsif small_attempts == 3 && @key_arr[0].to_i + 27 < 99
-            @key_arr[0] = (@key_arr[0].to_i + 27).to_s
-            try_getting_sides_to_match(index)
-          elsif small_attempts == 4 && @key_arr[1].to_i + 27 < 99
-            @key_arr[1] = (@key_arr[1].to_i + 27).to_s
-            try_getting_sides_to_match(index)
-          elsif small_attempts == 5 && @key_arr[0].to_i + 27 < 99
-            @key_arr[0] = (@key_arr[0].to_i + 27).to_s
-            try_getting_sides_to_match(index)
-          elsif small_attempts == 6 && @key_arr[1].to_i + 27 < 99
-            @key_arr[1] = (@key_arr[1].to_i + 27).to_s
-            try_getting_sides_to_match(index)
-          end
-        else
-        end
-        small_attempts +=1
       end
       index += 1
-      small_attempts = 0
     end
-
     @key = "#{@key_arr[0]}#{@key_arr[2]}#{@key_arr[3][1]}"
   end
 
@@ -129,9 +103,9 @@ class Cracker
   end
 
   def increment_left_side_to_match(index)
-    until @key_arr[index].to_i + 27 > 99 || @key_arr[index][1] == @key_arr[index + 1][0]
+    # until @key_arr[index].to_i + 27 > 99 || @key_arr[index][1] == @key_arr[index + 1][0]
       @key_arr[index] = (@key_arr[index].to_i + 27).to_s
-    end
+    # end
   end
 
   def note_key_start_value(index)

@@ -72,7 +72,7 @@ RSpec.describe Cracker do
 
       expect(cracker1.determine_key).to eq('02715')
       expect(cracker2.determine_key).to eq('62085')
-      expect(cracker3.determine_key).to eq('84446')
+      expect(cracker3.determine_key).to eq('57173')
       expect(cracker4.determine_key).to eq('69428')
       expect(cracker5.determine_key).to eq('40309')
     end
