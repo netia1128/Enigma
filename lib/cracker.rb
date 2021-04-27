@@ -2,15 +2,13 @@ require_relative 'enigma'
 
 class Cracker
   include Generatable
-  attr_reader :key,
-              :shifts_hash
+  attr_reader :key
 
   def initialize(encrypted_message, date)
     @encrypted_message = encrypted_message
     @decrypted_message = ''
     @date = date
     @key_arr = []
-    @key_arr_start = ''
     @key = ''
     cracker_sequence
   end
@@ -86,64 +84,27 @@ class Cracker
   def determine_key
     index = 0
     3.times do
-      try_getting_sides_to_match(index)
+      manipulate_key_array(index)
       until @key_arr[index][1] == @key_arr[index + 1][0]
             @key_arr[0] = (@key_arr[0].to_i + 27).to_s
-            try_getting_sides_to_match(index)
+            manipulate_key_array(index)
       end
       index += 1
     end
     @key = "#{@key_arr[0]}#{@key_arr[2]}#{@key_arr[3][1]}"
   end
 
-  def increment_right_side_to_match(index)
-    until @key_arr[index + 1].to_i + 27 > 99 || @key_arr[index][1] == @key_arr[index + 1][0]
-      @key_arr[index + 1] = (@key_arr[index + 1].to_i + 27).to_s
-    end
-  end
-
-  def increment_left_side_to_match(index)
-    # until @key_arr[index].to_i + 27 > 99 || @key_arr[index][1] == @key_arr[index + 1][0]
-      @key_arr[index] = (@key_arr[index].to_i + 27).to_s
-    # end
-  end
-
-  def note_key_start_value(index)
-    @key_arr_start = @key_arr[index]
-  end
-
-  def reset_key_start_value(index)
-    @key_arr[index] = @key_arr_start
-  end
-
-  def try_getting_sides_to_match(index)
-    @key_arr_start = ''
-    note_key_start_value(index)
-
-    if index == 0
-      increment_left_side_to_match(index)
-    end
-
-    if @key_arr[index][1] == @key_arr[index + 1][0]
-      #if it worked, keep it
-      @key_arr[index]
-    else
-      #if it didnt work, try resetting the left side incrementing the right side to match the left
-      reset_key_start_value(index)
-      note_key_start_value(index + 1)
-      increment_right_side_to_match(index)
-
-      if @key_arr[index][1] == @key_arr[index + 1][0]
-        #if it worked, keep the right side set to whatever it is now
-        @key_arr[index + 1]
-      else
-        #if it didn't work, reset the left side and go back to the big looper
-        reset_key_start_value(index + 1)
-      end
-    end
-  end
-
   private
 
-
+  def manipulate_key_array(index)
+      key_arr_start = @key_arr[index + 1]
+      until @key_arr[index + 1].to_i + 27 > 99 || @key_arr[index][1] == @key_arr[index + 1][0]
+        @key_arr[index + 1] = (@key_arr[index + 1].to_i + 27).to_s
+      end
+      if @key_arr[index][1] == @key_arr[index + 1][0]
+        @key_arr[index + 1]
+      else
+        @key_arr[index + 1] = key_arr_start
+      end
+  end
 end

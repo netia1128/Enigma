@@ -70,23 +70,12 @@ RSpec.describe Cracker do
       cracker5 = Cracker.new('ajsvhecykqkjysk', '240421')
 
 
+
       expect(cracker1.determine_key).to eq('02715')
       expect(cracker2.determine_key).to eq('62085')
       expect(cracker3.determine_key).to eq('57173')
       expect(cracker4.determine_key).to eq('69428')
-      expect(cracker5.determine_key).to eq('40309')
+      expect(cracker5.determine_key).to eq('13036')
     end
   end
-
-  # describe '#decrypt_message' do
-  #   it 'decrypts the message' do
-  #     # cracker = Cracker.new('ctdnjooqm wb bw', '260421')
-  #     # cracker = Cracker.new('keder ohulwthnw', '040895')
-  #     cracker = Cracker.new('rxfeysqhadytofy', '260421')
-
-  #     expect(cracker.shifts_hash.count).to eq(4)
-  #     expect(cracker.shifts_hash[:A]).to be_a(Integer)
-  #     expect(cracker.shifts_hash[:A]).to be < (28)
-  #   end
-  # end
 end
