@@ -9,7 +9,6 @@ class Cracker
     @encrypted_message = encrypted_message
     @decrypted_message = ''
     @date = date
-    @shifts_array = []
     @key_arr = []
     @key_arr_start = ''
     @key = ''
@@ -18,7 +17,10 @@ class Cracker
 
   def cracker_sequence
     pre_shifts_hash = determine_shift_hash_order
-    shift_hash = determine_shifts_hash(pre_shifts_hash)
+    shifts_hash = determine_shifts_hash(pre_shifts_hash)
+    key_hash = determine_key_hash(shifts_hash)
+    key_array = determine_key_array(key_hash)
+    @key = generate_key
   end
 
   def determine_shift_hash_order
@@ -58,10 +60,8 @@ class Cracker
     shifts_hash
   end
 
-
-  def generate_key_hash(shifts_hash)
+  def determine_key_hash(shifts_hash)
     offset_hash = generate_offset_hash(@date)
-    # require 'pry'; binding.pry
       key_hash = {
       A: shifts_hash[:A] - offset_hash[:A],
       B: shifts_hash[:B] - offset_hash[:B],
@@ -74,53 +74,55 @@ class Cracker
         key_hash[key] = (value.to_i + 27)
       end
     end
-    generate_key(key_hash)
   end
 
-  def generate_key(key_hash)
-    @key_arr = [key_hash[:A], key_hash[:B], key_hash[:C], key_hash[:D]]
-    @key_arr = @key_arr.map do |num|
-     '%02d' % num
-    end
-    index = 0
-    big_attempts = 0
-    small_attempts = 0
-
-    until big_attempts == 3 do
-      until small_attempts == 6 do
-        if @key_arr[index][1] != @key_arr[index + 1][0]
-          if small_attempts == 0
-            try_getting_sides_to_match(index)
-          elsif small_attempts == 1 && @key_arr[0].to_i + 27 < 99
-            @key_arr[0] = (@key_arr[0].to_i + 27).to_s
-            try_getting_sides_to_match(index)
-          elsif small_attempts == 2 && @key_arr[1].to_i + 27 < 99
-            @key_arr[1] = (@key_arr[1].to_i + 27).to_s
-            try_getting_sides_to_match(index)
-          elsif small_attempts == 3 && @key_arr[0].to_i + 27 < 99
-            @key_arr[0] = (@key_arr[0].to_i + 27).to_s
-            try_getting_sides_to_match(index)
-          elsif small_attempts == 4 && @key_arr[1].to_i + 27 < 99
-            @key_arr[1] = (@key_arr[1].to_i + 27).to_s
-            try_getting_sides_to_match(index)
-          elsif small_attempts == 5 && @key_arr[0].to_i + 27 < 99
-            @key_arr[0] = (@key_arr[0].to_i + 27).to_s
-            try_getting_sides_to_match(index)
-          elsif small_attempts == 6 && @key_arr[1].to_i + 27 < 99
-            @key_arr[1] = (@key_arr[1].to_i + 27).to_s
-            try_getting_sides_to_match(index)
-          end
-        else
-        end
-        small_attempts +=1
-      end
-      index += 1
-      big_attempts += 1
-      small_attempts = 0
-    end
-
-    @key = "#{@key_arr[0]}#{@key_arr[2]}#{@key_arr[3][1]}"
+  def determine_key_array(key_hash)
+  #   # @key_arr = [key_hash[:A], key_hash[:B], key_hash[:C], key_hash[:D]]
+  #   # @key_arr = @key_arr.map do |num|
+  #   #   '%02d' % num
+  #   # end
   end
+
+  # def generate_key
+  #   index = 0
+  #   big_attempts = 0
+  #   small_attempts = 0
+
+    # until big_attempts == 3 do
+    #   until small_attempts == 6 do
+    #     if @key_arr[index][1] != @key_arr[index + 1][0]
+    #       if small_attempts == 0
+    #         try_getting_sides_to_match(index)
+    #       elsif small_attempts == 1 && @key_arr[0].to_i + 27 < 99
+    #         @key_arr[0] = (@key_arr[0].to_i + 27).to_s
+    #         try_getting_sides_to_match(index)
+    #       elsif small_attempts == 2 && @key_arr[1].to_i + 27 < 99
+    #         @key_arr[1] = (@key_arr[1].to_i + 27).to_s
+    #         try_getting_sides_to_match(index)
+    #       elsif small_attempts == 3 && @key_arr[0].to_i + 27 < 99
+    #         @key_arr[0] = (@key_arr[0].to_i + 27).to_s
+    #         try_getting_sides_to_match(index)
+    #       elsif small_attempts == 4 && @key_arr[1].to_i + 27 < 99
+    #         @key_arr[1] = (@key_arr[1].to_i + 27).to_s
+    #         try_getting_sides_to_match(index)
+    #       elsif small_attempts == 5 && @key_arr[0].to_i + 27 < 99
+    #         @key_arr[0] = (@key_arr[0].to_i + 27).to_s
+    #         try_getting_sides_to_match(index)
+    #       elsif small_attempts == 6 && @key_arr[1].to_i + 27 < 99
+    #         @key_arr[1] = (@key_arr[1].to_i + 27).to_s
+    #         try_getting_sides_to_match(index)
+    #       end
+    #     else
+    #     end
+    #     small_attempts +=1
+    #   end
+    #   index += 1
+    #   big_attempts += 1
+    #   small_attempts = 0
+    # end
+
+  #   @key = "#{@key_arr[0]}#{@key_arr[2]}#{@key_arr[3][1]}"
+  # end
 
   def increment_right_side_to_match(index)
     until @key_arr[index + 1].to_i + 27 > 99 || @key_arr[index][1] == @key_arr[index + 1][0]

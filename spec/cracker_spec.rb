@@ -35,12 +35,29 @@ RSpec.describe Cracker do
                           :B => ['n', 2],
                           :C => ['w', 3],
                           :D => ['t', 0] }
-      shifts_hash = { A: 3,
-                      B: 0,
-                      C: 19,
-                      D: 20 }
+      shifts_hash = { A: 3, B: 0, C: 19, D: 20 }
 
       expect(cracker.determine_shifts_hash(pre_shifts_hash)).to eq(shifts_hash)
+    end
+  end
+
+  describe '#determine_key_hash' do
+    it 'generates a non-negative key hash' do
+      cracker = Cracker.new('keder ohulwthnw', '040895')
+      shifts_hash = { A: 3, B: 0, C: 19, D: 20 }
+      key_hash = {:A=>2, :B=>0, :C=>17, :D=>15}
+
+      expect(cracker.determine_key_hash(shifts_hash)).to eq(key_hash)
+    end
+  end
+
+  describe '#determine_key_array' do
+    it 'generates a non-negative key hash' do
+      cracker = Cracker.new('keder ohulwthnw', '040895')
+      key_hash = {:A=>2, :B=>0, :C=>17, :D=>15}
+      key_array = []
+
+      expect(cracker.determine_key_array(key_hash)).to eq(key_hash)
     end
   end
 
