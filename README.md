@@ -1,7 +1,7 @@
 # Enigma 
 
 ## Description  
-Enigma is a ruby-based project completed during my time at the Turing School of Software and Design. The aim of the project is to create a tool that runs off a command-line interface that is capable of carrying out ceaser cipher encyption or decryption of a message, as well as cracking an encryption code. More details on the encryption algorithim can ebe found [here](https://backend.turing.edu/module1/projects/enigma/encryption). 
+Enigma is a ruby-based project completed during my time at the Turing School of Software and Design. The aim of the project is to create a tool that runs off a command-line interface that is capable of carrying out ceaser cipher encyption or decryption of a message, as well as cracking an encryption code. More details on the encryption algorithim can be found [here](https://backend.turing.edu/module1/projects/enigma/encryption). 
 
 ## Design  
 Enigma has a lean design. The pipeline starts with user provided text files that include a message to be encrypted or decrypted. Following a CLI prompt, a runner file read the message contained in the text file, and passes it to the enigma class to be decrypted or encrypted. Based upon the action requested, the enigma class will reach out to a module that will provide the encryption/decryption key, or it will reach out to a class that cracks and unknown encryption key. 
