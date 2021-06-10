@@ -14,7 +14,6 @@ The project uses Rspec to test the project. Each method contained within the pro
 
 ## Running Enigma
 
-**To run Enigma, follow these steps:**  
 After cloning the project, choose one of the paths below to run the program.
 
 **To Encrypt**  
