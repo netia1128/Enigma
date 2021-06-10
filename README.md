@@ -1,5 +1,5 @@
 # Enigma 
-<center> ![Caesar_cipher](https://user-images.githubusercontent.com/76889420/121444413-b7022280-c94c-11eb-9d76-78677b184a9d.png) </center>
+![Caesar_cipher](https://user-images.githubusercontent.com/76889420/121444413-b7022280-c94c-11eb-9d76-78677b184a9d.png)
 
 ## Description  
 Enigma is a ruby-based project completed during my time at the Turing School of Software and Design. The aim of the project is to create a tool that runs off a command-line interface that is capable of carrying out ceaser cipher encyption or decryption of a message, as well as cracking an encryption code. More details on the encryption algorithim can be found [here](https://backend.turing.edu/module1/projects/enigma/encryption). 
