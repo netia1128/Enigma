@@ -17,17 +17,18 @@ The project uses Rspec to test the project. Each method contained within the pro
 After cloning the project, choose one of the paths below to run the program.
 
 **To Encrypt**  
-1. To encrypt, write a message in message_to_encrypt.
-2. Run the following command in your CLI ```$ ruby encrypt.rb message_to_encrypt.txt encrypted_message.txt. ```
+1. To encrypt, write a message in message_to_encrypt.txt
+2. Run the following command in your CLI ```$ ruby encrypt.rb message_to_encrypt.txt encrypted_message.txt ```
 3. Your encyrpted message will be found in encrypted_message.txt
 
 **To Decrypt**  
 1. Start by encrypting a message using the steps above.
-2. Run the following command in your CLI ```$ ruby decrypt.rb encrypted_message.txt.txt decrypted_message.txt. ```
+2. Run the following command in your CLI ```$ ruby decrypt.rb encrypted_message.txt.txt decrypted_message.txt ```
 3. Your decyrpted message will be found in decrypted_message.txt
 
 **To Crack**  
 Cracking will crack an encrypted message, and it will report to you the key that was used to encrypt it. 
 1. Start by encrypting a message using the steps above. Note - the message must end in ' end' for the cracker to work.
-2. Run the following command in your CLI ```$ ruby crack.rb encrypted_message.txt craced.txt. ``
+2. Run the following command in your CLI ```$ ruby crack.rb encrypted_message.txt craced.txt
+3. Your cracked message will be found in cracked.txt ``
  
