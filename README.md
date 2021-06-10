@@ -29,6 +29,6 @@ After cloning the project, choose one of the paths below to run the program.
 **To Crack**  
 Cracking will crack an encrypted message, and it will report to you the key that was used to encrypt it. 
 1. Start by encrypting a message using the steps above. Note - the message must end in ' end' for the cracker to work.
-2. Run the following command in your CLI ```$ ruby crack.rb encrypted_message.txt craced.txt
-3. Your cracked message will be found in cracked.txt ``
+2. Run the following command in your CLI ```$ ruby crack.rb encrypted_message.txt craced.txt ```
+3. Your cracked message will be found in cracked.txt 
  
